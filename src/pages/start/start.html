@@ -1,0 +1,9 @@
+<ion-content padding class="startPage">
+  <div class="title">
+    <h1><b>{{title}}</b></h1>
+    <h2>{{subTitle}}</h2>
+  </div>
+  <button class="newGame" ion-button round (click)="onNewGame($event)"> {{buttons[0]}} </button>
+  <button class="loadGame" ion-button round (click)="onLoadGame($event)"> {{buttons[1]}} </button>
+</ion-content>
+<ion-nav [root]="rootPage"></ion-nav>

@@ -1,3 +1,45 @@
+ion-content {
+    background-image: url('/img/capua.png'); //no-repeat center top; /* 170px x 200px */
+    position:absolute;             /* position in the center of the screen */
+}
+
+button {
+  width: 300px;
+  position: absolute;
+}
+
+.title {
+  padding-top: 10%;
+  padding-left: 27%;
+  font-size: 30px;
+  font-style: italic;
+  font-family: fantasy;
+}
+
+h2 {
+  padding-top: 1%;
+  padding-left: 15%;
+  font-size: 20px;
+  font-style: italic;
+  color: #600080
+}
+
+.newGame {
+  margin-top: 10%;
+  margin-left: 30%;
+}
+
+.loadGame{
+  margin-top: 5%;
+  margin-left: 30%;
+}
+
+.title {
+  font-style: italic;
+  font-size: 20;
+  color: rgb(200,100,110);
+}
+
 .selected {
   background-color: #CFD8DC !important;
   color: white;
