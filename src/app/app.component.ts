@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
-import { StartPage } from '../pages/start/start'
-import { TabsPage } from '../pages/tabs/tabs';
+import { StartPage } from '../pages/start/start';
 
 @Component({
   templateUrl: 'app.html'

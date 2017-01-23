@@ -1,24 +1,21 @@
 import {Component} from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { CharacterSelectionPage } from '../character-selection/character-selection'
-import { LoadGamePage } from '../load-game/load-game'
+import { NavController,  NavParams } from 'ionic-angular';
+import { MenuComponent } from '../../app/menu/menu.component';
+import { ChampionSelectionPage } from '../champion-selection/champion-selection';
 
 @Component({
   selector: 'start-page',
   templateUrl: 'start.html'
 })
 export class StartPage {
-  buttons: Array<string> = ["New Game", "Load Game"];
-  title: string = "Crixo, Champion of Capua";
-  subTitle: string = "The forgotten tale";
-  constructor(private navCtrl: NavController) {
+  menu : String;
+  constructor(private navCtrl: NavController, private navParams: NavParams) {
 
   }
-  onNewGame(event) {
-    this.navCtrl.push(CharacterSelectionPage);
+
+  onSelect(option: String) {
+    console.log("opcion{" + option + "}")
+    this.navCtrl.push(ChampionSelectionPage);
   }
 
-  onLoadGame(event) {
-    this.navCtrl.push(LoadGamePage);
-  }
 }
