@@ -7,6 +7,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ChampionComponent } from './champion/champion.component';
 import { ChampionDetailComponent } from './champion/champion-detail.component';
 import { MenuComponent } from './menu/menu.component';
+import { GameComponent } from './game/game.component';
 
 // Servicios
 import { ChampionService } from './champion/champion.service';
@@ -15,7 +16,7 @@ import { ChampionService } from './champion/champion.service';
 import { StartPage } from '../pages/start/start';
 import { ChampionSelectionPage } from '../pages/champion-selection/champion-selection';
 //import { LoadGamePage } from '../pages/load-game/load-game';
-//import { GamePage } from '../pages/game/game';
+import { GamePage } from '../pages/game/game';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ChampionSelectionPage } from '../pages/champion-selection/champion-sele
     StartPage,
     ChampionSelectionPage,
     // LoadGamePage,
-    // GamePage
+    GamePage,
+    GameComponent,
     DashboardComponent,
     ChampionComponent,
     ChampionDetailComponent,
@@ -37,8 +39,7 @@ import { ChampionSelectionPage } from '../pages/champion-selection/champion-sele
      MyApp,
      StartPage,
      ChampionSelectionPage,
-    // ChampionComponent
-    // GamePage,
+     GamePage,
     // LoadGamePage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ChampionService]

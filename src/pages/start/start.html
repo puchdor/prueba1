@@ -8,6 +8,10 @@
 
 
 <ion-content padding>
-  <menu-component (onOption)="onSelect($event)"></menu-component>
+  <div class="title">
+    <h1><b>{{title}}</b></h1>
+    <h2>{{subTitle}}</h2>
+  </div>
+  <menu-component [options]="options" (onOption)="onSelect($event)"></menu-component>
   <h3 *ngIf=menu>{{menu}}...</h3>
 </ion-content>

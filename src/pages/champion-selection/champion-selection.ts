@@ -2,7 +2,7 @@ import { Component, SimpleChange } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ChampionComponent } from '../../app/champion/champion.component';
 import { Champion } from '../../app/champion/champion';
-import { StartPage } from '../start/start';
+import { GamePage } from '../game/game';
 /*
   Generated class for the ChampionSelection page.
 
@@ -30,7 +30,7 @@ export class ChampionSelectionPage {
 
   onSelect(champion: Champion) {
     this.champion = champion;
-    this.navCtrl.push(StartPage);
+    this.navCtrl.push(GamePage);
   }
 
 

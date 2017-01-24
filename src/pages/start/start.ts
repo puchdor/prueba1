@@ -8,14 +8,23 @@ import { ChampionSelectionPage } from '../champion-selection/champion-selection'
   templateUrl: 'start.html'
 })
 export class StartPage {
-  menu : String;
+  options : Array<string> = ["New Game", "Load Game"];
+
+  title: string = "Crixo, Champion of Capua";
+  subTitle: string = "A true champion tale";
+
   constructor(private navCtrl: NavController, private navParams: NavParams) {
 
   }
 
-  onSelect(option: String) {
-    console.log("opcion{" + option + "}")
-    this.navCtrl.push(ChampionSelectionPage);
+  onSelect(option: string) {
+    if(option == this.options[0]) {
+        this.navCtrl.push(ChampionSelectionPage);
+    }
+    else
+    {
+      console.log("Opcion no implementada");
+    }
   }
 
 }
