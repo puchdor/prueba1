@@ -8,9 +8,11 @@ import { ChampionComponent } from './champion/champion.component';
 import { ChampionDetailComponent } from './champion/champion-detail.component';
 import { MenuComponent } from './menu/menu.component';
 import { GameComponent } from './game/game.component';
+import { PointsComponent} from './game/points.component';
 
 // Servicios
 import { ChampionService } from './champion/champion.service';
+import { GameService } from './game/game.service';
 
 // Paginas
 import { StartPage } from '../pages/start/start';
@@ -30,6 +32,7 @@ import { GamePage } from '../pages/game/game';
     ChampionComponent,
     ChampionDetailComponent,
     MenuComponent,
+    PointsComponent
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -42,6 +45,6 @@ import { GamePage } from '../pages/game/game';
      GamePage,
     // LoadGamePage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ChampionService]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ChampionService, GameService]
 })
 export class AppModule {}
