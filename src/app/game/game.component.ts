@@ -1,15 +1,14 @@
-import { AfterContentInit, Component, ElementRef } from '@angular/core';
+import { OnInit, Component, ElementRef } from '@angular/core';
 
 @Component ({
   selector: 'game-component',
   templateUrl: './game.component.html'
 })
-export class GameComponent implements AfterContentInit{
+export class GameComponent implements OnInit {
   node: string;
   GAME_LEVELS : Array<any> = [];
 
   constructor(private el: ElementRef){
-    var scale = 20;  // escala de dibujos
     var playerXSpeed = 7;
     var gravity = 30;
     var jumpSpeed = 17;
@@ -19,14 +18,6 @@ export class GameComponent implements AfterContentInit{
     var wobbleDist = 0.07;
     // chance de moverse en segundos
     var maxStep = 0.05;
-
-    var actorChars = {
-      "@" : Player,
-      "o" : Coin,
-      "=" : Lava,
-      "|" : Lava,
-      "v" : Lava
-    };
 
     var simpleLevelPlan = [
       "                      ",
@@ -42,9 +33,9 @@ export class GameComponent implements AfterContentInit{
     this.GAME_LEVELS.push(simpleLevelPlan);
   }
 
-  ngAfterContentInit() {
+  ngOnInit() {
 
-    runGame(this.GAME_LEVELS, DOMDisplay, this.el.nativeElement);
+    runGameTest(this.GAME_LEVELS, DOMDisplay, this.el.nativeElement);
 
     //const tmp = document.createElement('div');
     //const el = this.el.nativeElement.cloneNode(true);
@@ -172,13 +163,20 @@ function Level(plan : Array<string>) {
   this.height = plan.length; // array
   this.grid = [];
   this.actors = [];
+  this.actorChars = {
+    "@" : Player,
+    "o" : Coin,
+    "=" : Lava,
+    "|" : Lava,
+    "v" : Lava
+  };
 
   for(var y=0 ; y<this.height ; y++) {
     var line = plan[y];
     var gridLine = [];
     for(var x=0 ; x<this.width ; x++) {
       var ch = line[x];
-      var fieldType = null;
+      var fieldType = undefined;
       var Actor = this.actorChars[ch];     /// aca falta algo
       if(Actor)
         this.actors.push(new Actor(new Vector(x, y), ch));
@@ -196,12 +194,12 @@ function Level(plan : Array<string>) {
     return actor.type == "player";
   })[0];   // por si hay mas de uno... que no deberia
 
-  this.status = this.finishDelay = null;
+  this.status = this.finishDelay = undefined;
 
 }
 
 Level.prototype.isFinished = function() {
-  return this.status != null && this.finishDelay < 0;
+  return this.status != undefined && this.finishDelay < 0;
 }
 
 /////////// Motion ///////////////////////
@@ -241,7 +239,7 @@ Level.prototype.actorAt = function(actor) {
 }
 
 Level.prototype.animate = function(step, keys) {
-  if (this.status != null)
+  if (this.status != undefined)
     this.finishDelay -= step;
 
   while (step > 0 ){
@@ -254,7 +252,7 @@ Level.prototype.animate = function(step, keys) {
 };
 
 Level.prototype.playerTouched = function(type, actor) {
-  if(type == "lava" && this.status == null){
+  if(type == "lava" && this.status == undefined){
     this.status = "lost";
     this.finishDelay = 1;
   }
@@ -282,21 +280,46 @@ function elt(name, className) {
   return elt;
 }
 
-function DOMDisplay(parent, level) {
-  this.wrap = parent.appendChild(elt("div", "game")); // parent.appendChild( document.createElement("LI") || document.createTextNode("HOLA"))
-  this.level = level;
+class DOMDisplay {
+    scale : number = 20;
+    wrap : Object;
+    level : Object;  // TODO Level
+    actorLayer : Object; // player;
 
-  this.wrap.appendChild(this.drawBackground());  // background es dibujado una vez
-  this.actorLayer = null;
-  this.drawFrame();   // <-- usa actorLayer para redibujar a los actores
+    constructor(parent, level) {
+      this.wrap = parent.appendChild(elt("div", "game"));
+      this.level = level;
+      this.wrap.appendChild(this.drawBackground());
+      this.actorLayer = undefined;
+      this.drawFrame();
+    }
+
+    drawBackground() : number {
+      var table = undefined;
+      return table;
+    }
+
+    drawFrame(){
+
+    }
 }
+
+// function DIMDisplay(parent, level) {
+//   this.scale = 20 // escala de dibujos
+//   this.wrap = parent.appendChild(elt("div", "game")); // parent.appendChild( document.createElement("LI") || document.createTextNode("HOLA"))
+//   this.level = level;
+//
+//   this.wrap.appendChild(this.drawBackground());  // background es dibujado una vez
+//   this.actorLayer;// = undefined;
+//   this.drawFrame();   // <-- usa actorLayer para redibujar a los actores
+// }
 
 DOMDisplay.prototype.drawBackground = function () {
   var table = elt("table", "background");
   // this es DOMDisplay
   table.style.width = this.level.width * this.scale + "px";
   this.level.grid.forEach(function(row) {
-    var rowElt = table.appendChild(elt("tr", null));
+    var rowElt = table.appendChild(elt("tr", undefined));
     rowElt["style"] = {"height": this.scale + "px"};
     //rowElt.style.height = scale + "px";
     row.forEach(function(type) {
@@ -308,7 +331,7 @@ DOMDisplay.prototype.drawBackground = function () {
 
 // es llamada por drawFrame
 DOMDisplay.prototype.drawActors = function() {
-  var wrap = elt("div", null);
+  var wrap = elt("div", undefined);
   this.level.actors.forEach(function(actor) {
     var rect = wrap.appendChild(elt("div", "actor " + actor.type));
     rect["style"] = {"width": actor.size.x * this.scale + "px"};
@@ -381,10 +404,10 @@ function trackKeys(codes) {
 
 /////////// Running the game //////
 function runAnimation(frameFunc) {
-  var lastTime = null;
+  var lastTime; // = undefined;
   function frame(time) {
     var stop = false;
-    if(lastTime != null) {
+    if(lastTime != undefined) {
       var timeStep = Math.min(time - lastTime, 100) / 1000;
       stop = frameFunc(timeStep) === false;
     }
@@ -412,6 +435,12 @@ function runLevel(level, Display, content, andThen) {
 }
 
 ////////// Motion /////////////
+
+function runGameTest(plans, Display, content) {
+  var level = new Level(plans[0]);
+  var display = new Display(content, level);
+  display.drawFrame(1);
+}
 
 function runGame(plans, Display, content) {
   function startLevel(n) {

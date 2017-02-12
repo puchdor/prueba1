@@ -1,9 +1,9 @@
-import { Component, Input, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
+import { GameService } from './game.service';
 
 @Component({
   selector: 'points',
-  template: `<div class="board">ho</div>
-  `,
+  template: ``,
   styles: [`
     .board {
       width: 10em;
@@ -16,22 +16,31 @@ import { Component, Input, ElementRef, OnInit } from '@angular/core';
   `]
 })
 export class PointsComponent implements OnInit {
-  @Input() currentPoints : number;
 
-  constructor(private el: ElementRef){
+  currentPoints: number;
 
+  constructor(private el: ElementRef, private gameServ: GameService){
+    gameServ.setPoints(0);
   }
 
   ngOnInit(){
-    pointBoard(this.el.nativeElement);
+    this.getPoints();
+    this.drawPointBoard(this.el.nativeElement);
   }
 
+  getPoints(): void {
+    this.currentPoints = this.gameServ.getCurrentPoints();
+    console.log(this.currentPoints);
+  }
+
+  drawPointBoard(el) : void {
+    /// Inicializo servicio.
+    var texto = document.createTextNode(String(this.currentPoints));
+    var newEl = el.appendChild(texto);
+  }
 }
 
-function pointBoard(element) {
-  /// Inicializo servicio.
-  var newEl = element.appendChild("div", "currentPoints")
-}
+
 
 function elt(name, className) {
   var elt = document.createElement(name);

@@ -8,6 +8,10 @@ export class GameService {
     return Promise.resolve(this.currentPoints);
   }
 
+  getCurrentPoints() : number {
+    return this.currentPoints;
+  }
+
   setPoints(points) {
     this.currentPoints = points;
   }
